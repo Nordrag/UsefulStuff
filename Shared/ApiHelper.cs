@@ -21,7 +21,7 @@ public class Response<T>
 
 public class ApiHelper
 {
-    string baseAddress = "https://localhost:7230/";
+    string? baseAddress;
     HttpClient client;
     string token;
 
@@ -34,12 +34,7 @@ public class ApiHelper
     {
         
     }
-
-    public void SetAddressToServer()
-    {
-        SetUrl("https://arduinowebapi.azure-api.net/");      
-    }
-
+   
     public async Task<HttpStatusCode> GetResponseCode(string apiRoute)
     {
         RenewClient();
@@ -90,17 +85,8 @@ public class ApiHelper
     {
         RenewClient();
         return await client.PutAsync(apiRoute, null);
-    }  
+    }   
 
-    public void SetBaseUrlDebug()
-    {
-        baseAddress = DeviceInfo.Platform == DevicePlatform.Android ? "http://10.0.2.2:5209" : "https://localhost:7230/";
-    }
-
-    /// <summary>
-    /// default url = 192.168.100.6/
-    /// </summary>
-    /// <param name="url"></param>
     public void SetUrl(string url)
     {
         baseAddress = url;
@@ -108,7 +94,6 @@ public class ApiHelper
 
     public void SetAuthHeader(string Token)
     {      
-        //thats kekw son
         var res = Token.Replace('"', ' ');
         token = res.Trim();
     }
